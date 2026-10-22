@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Letter Land – English Unit 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff7e6;--ink:#2b2140;--card:#fff;--line:#2b2140;--g:#2fb86a;--y:#ffc233;--p:#ff6f91;--b:#3d9bff;--soft:#fff0cc;--ok:#d9f7e4;--no:#ffe0e0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1530;--ink:#fff4dc;--card:#2a2045;--line:#fff4dc;--soft:#3a2d5c;--ok:#1d5a3a;--no:#6a2a3a}}
+:root[data-theme="dark"]{--bg:#1c1530;--ink:#fff4dc;--card:#2a2045;--line:#fff4dc;--soft:#3a2d5c;--ok:#1d5a3a;--no:#6a2a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 18px/1.55 Nunito,"Trebuchet MS",sans-serif}
+h1,h2,h3,.btn{font-family:"Baloo 2","Comic Sans MS",sans-serif;line-height:1.15}
+header{padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{margin:0;font-size:clamp(24px,5vw,38px);flex:1;cursor:pointer}
+main{max-width:980px;margin:0 auto;padding:8px 16px 60px}
+.hero{background:var(--y);color:#2b2140;border:4px solid var(--line);border-radius:28px;padding:22px;box-shadow:0 8px 0 var(--line)}
+.hero h2{margin:0 0 6px;font-size:clamp(26px,6vw,42px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:26px}
+.nav{border:4px solid var(--line);border-radius:26px;padding:20px;text-align:center;cursor:pointer;color:#2b2140;font:800 24px "Baloo 2",sans-serif;box-shadow:0 7px 0 var(--line);transition:transform .1s}
+.nav:hover{transform:translateY(-4px)}.nav:active{transform:translateY(4px);box-shadow:0 2px 0 var(--line)}
+.nav i{display:block;font-style:normal;font-size:56px}.nav small{display:block;font:600 15px Nunito,sans-serif}
+.btn{border:3px solid var(--line);background:var(--g);color:#fff;border-radius:16px;padding:10px 20px;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.btn.b{background:var(--b)}.btn.p{background:var(--p)}.btn.y{background:var(--y);color:#2b2140}.btn.ghost{background:var(--card);color:var(--ink)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,.nav:focus-visible{outline:4px solid var(--b);outline-offset:2px}
+.view{display:none}.view.on{display:block}
+.card{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:18px 20px;margin:16px 0}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.tab{border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 18px;font:700 18px "Baloo 2",sans-serif;cursor:pointer}
+.tab.on{background:var(--p);color:#fff}
+table{border-collapse:collapse;width:100%;font-size:17px}th,td{border:2px solid var(--line);padding:6px 10px;text-align:left}th{background:var(--soft)}
+.tbl{overflow-x:auto}
+mark{background:var(--y);color:#2b2140;border-radius:6px;padding:0 5px}
+.n{color:#d6336c;font-weight:700}.v{color:#1c7ed6;font-weight:700}.a{color:#2b8a3e;font-weight:700}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 14px;border:3px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:600 18px Nunito,sans-serif;cursor:pointer}
+.opt.sel{background:var(--soft);border-color:var(--b)}.opt.right{background:var(--ok)}.opt.wrong{background:var(--no)}
+input[type=text],input[type=email],input[type=password],textarea{width:100%;padding:12px;border:3px solid var(--line);border-radius:14px;font:600 18px Nunito,sans-serif;background:var(--card);color:var(--ink)}
+.ans{display:none;margin-top:10px;padding:10px 14px;background:var(--ok);border:3px dashed var(--g);border-radius:14px}.ans.on{display:block}
+.bar{height:18px;border:3px solid var(--line);border-radius:99px;overflow:hidden;background:var(--card)}.bar>div{height:100%;background:var(--g);width:0;transition:width .3s}
+.msg{color:#d6336c;font-weight:700;min-height:24px}
+.big{font:800 64px "Baloo 2",sans-serif;text-align:center}
+textarea.code{font:13px monospace;height:110px}
+.pop{position:fixed;inset:auto 0 20px 0;text-align:center;pointer-events:none;font:800 40px "Baloo 2",sans-serif;opacity:0}.pop.on{animation:p .9s}
+@keyframes p{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:translateY(-40px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><h1 onclick="go('home')" title="Home">✉️ Letter Land</h1>
+<button class="btn ghost" id="sndb" onclick="toggleSnd()">🔊 Sound on</button>
+<button class="btn ghost" onclick="go('home')">🏠 Home</button></header>
+<main>
+<section id="home" class="view on">
+<div class="hero"><h2>Welcome, young writer! ✉️</h2><p style="margin:0">Learn to write letters, emails and postcards – formal and informal. Pick a card to begin!</p></div>
+<div class="grid">
+<div class="nav" tabindex="0" role="button" style="background:#ffd166" onclick="go('exp')"><i>📖</i>Explanation<small>Learn about letters</small></div>
+<div class="nav" tabindex="0" role="button" style="background:#8ce0a6" onclick="go('rev')"><i>🎯</i>Review<small>Practise with answers</small></div>
+<div class="nav" tabindex="0" role="button" style="background:#ff9bb3" onclick="go('test')"><i>🏆</i>Test<small>Show what you know</small></div>
+<div class="nav" tabindex="0" role="button" style="background:#9cc9ff" onclick="go('teach')"><i>👨‍👩‍👧</i>Teacher &amp; Parents<small>Results &amp; Excel</small></div>
+</div></section>
+
+<section id="exp" class="view"><h2>📖 Explanation</h2>
+<div class="tabs" id="etabs"></div><div id="ebody"></div></section>
+
+<section id="rev" class="view"><h2>🎯 Review</h2>
+<p>Try each question. Tap <b>Show answer</b> any time to check!</p>
+<div class="tabs" id="rtabs"></div><div id="rbody"></div></section>
+
+<section id="test" class="view"><h2>🏆 Test</h2><div id="tbody"></div></section>
+
+<section id="teach" class="view"><h2>👨‍👩‍👧 Teacher &amp; Parents</h2>
+<div class="card" id="gate"><h3>🔒 Enter the password</h3><p>This area is for teachers and parents.</p>
+<input type="password" id="pw" inputmode="numeric" placeholder="Password" onkeydown="if(event.key==='Enter')unlock()">
+<p class="msg" id="pwm"></p><button class="btn" onclick="unlock()">🔓 Open</button></div>
+<div id="hub" style="display:none">
+<div class="card"><p id="dbm"></p><label>🔎 Find a child<br><input type="text" id="srch" oninput="drawTable()" placeholder="Type a name or email"></label></div>
+<div class="card"><h3>📥 Add a result code</h3><p>If a result did not arrive automatically, paste the child's code here (one per line).</p>
+<textarea class="code" id="codes" placeholder="Paste codes here…"></textarea><p class="msg" id="tmsg"></p>
+<button class="btn b" onclick="addCodes()">➕ Add results</button></div>
+<div class="card"><button class="btn" onclick="exportX(all(),'english-unit2-all-results.xlsx')">📥 Export ALL results to Excel</button>
+<button class="btn p" onclick="clearAll()">🗑️ Clear pasted codes</button><p class="msg" id="xmsg"></p></div>
+<h3 id="cnt"></h3><div id="rcards"></div></div></section>
+</main>
+<div class="pop" id="pop"></div>
+
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let snd=true,AC;
+function beep(f,d=.15,t=0){if(!snd)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.type='triangle';g.gain.value=.15;o.connect(g);g.connect(AC.destination);o.start(AC.currentTime+t);o.stop(AC.currentTime+t+d)}catch(e){}}
+const good=()=>{beep(523,.12);beep(659,.12,.12);beep(784,.2,.24)},bad=()=>{beep(220,.25)};
+function toggleSnd(){snd=!snd;$('#sndb').textContent=snd?'🔊 Sound on':'🔇 Sound off'}
+function pop(t){const p=$('#pop');p.textContent=t;p.classList.remove('on');void p.offsetWidth;p.classList.add('on')}
+function go(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));speechSynthesis&&speechSynthesis.cancel();scrollTo(0,0);if(id==='test')renderTest();if(id==='teach')drawTable();beep(600,.08)}
+function say(el,btn){try{if(speechSynthesis.speaking){speechSynthesis.cancel();return}const u=new SpeechSynthesisUtterance($(el).innerText);u.lang='en-GB';u.rate=.85;speechSynthesis.speak(u)}catch(e){alert('Read aloud is not available on this device.')}}
+
+/* ---------- EXPLANATION ---------- */
+const EXP=[
+{t:'✉️ Why we write letters',h:`<div class="card"><h3>Reasons for writing</h3><p>We write <b>letters</b> and <b>emails</b> to: share news with a friend or family member • ask for information • give information • say thank you • complain.</p><p>Some letters, like <b>postcards</b>, are also <b>recounts</b>.</p></div>
+<div class="card"><h3>Formal or informal?</h3><p>We change how we write depending on <b>who</b> we are writing to. We use <mark>formal</mark> language for strangers and <mark>informal</mark> language for friends.</p></div>
+<div class="card"><h3>What is a recount?</h3><p>A <b>recount</b> is a non-fiction text that tells the <b>events that happened</b> to a person or people. It uses <b>past tense verbs</b>, <b>sentence starters</b> (when, where, how), <b>connectives</b> like <i>because</i> and <i>if</i>, and <b>special vocabulary</b> for the events. Events are told <b>in order</b>.</p></div>`},
+{t:'😊 Informal letters',h:`<div class="card"><h3>Mia’s email to Rasha</h3><p>Mia writes to her friend Rasha to share exciting news. She tells about her auntie’s wedding, meeting her cousins Elena and Luiz from Rio de Janeiro in Brazil, and an invitation to visit Rio in the summer. The style is <b>informal</b> because it is between friends of the same age.</p></div>
+<div class="card"><h3>Features of an informal letter</h3><p>✅ a <b>greeting</b> (Hi Rasha!) ✅ an <b>introduction</b> ✅ <b>chatty, informal language</b> ✅ a <b>conclusion</b> ✅ a <b>close</b> (Love Mia)</p><p>Mia also uses <b>exclamation marks</b>, <b>CAPITAL letters</b> for excitement, and a P.S. at the end.</p></div>
+<div class="card"><h3>Contractions</h3><p>A <mark>contraction</mark> is a short version of words. The <b>apostrophe</b> shows that a letter is missed out.</p><div class="tbl"><table><tr><th>Full</th><th>Short</th><th>Full</th><th>Short</th></tr><tr><td>cannot</td><td>can’t</td><td>it is</td><td>it’s</td></tr><tr><td>do not</td><td>don’t</td><td>I am</td><td>I’m</td></tr><tr><td>is not</td><td>isn’t</td><td>she is</td><td>she’s</td></tr><tr><td>he is</td><td>he’s</td><td>they are</td><td>they’re</td></tr></table></div><p>We use contractions when we speak. They make a text seem informal.</p></div>
+<div class="card"><h3>Words to know</h3><p><mark>hit it off</mark> got on very well • <mark>parakeets</mark> colourful rainforest birds • <mark>Carnival</mark> a large public party • <mark>toucan</mark> a colourful bird with a long beak • <mark>Sugarloaf Mountain</mark> a steep mountain in Rio</p></div>`},
+{t:'🎩 Formal letters',h:`<div class="card"><h3>Features of a formal letter</h3><p>📍 the writer’s and reader’s <b>address</b> • 📅 the <b>date</b> • 👋 a <b>greeting</b> (Dear Butterfly Adventures) • 📝 an <b>introduction</b> giving the reason for the letter • 📄 <b>paragraphs</b> • 🎯 <b>precise vocabulary</b> • 📏 <b>longer sentences</b> • 🤝 a <b>formal ending</b> (Yours sincerely)</p></div>
+<div class="card"><h3>Alma’s booking letter</h3><p>Alma Garcia writes to a tour company, Butterfly Adventures, to book a walking safari in Tijuca National Park for one adult and four children. Paragraph 1: the booking and dates. Paragraph 2: what the children would like to see (a waterfall and a toco toucan). Paragraph 3: the need for an English-speaking guide.</p><p>Formal words: <b>recommend</b> (suggest), <b>available</b> (free to book), <b>experiences</b>.</p></div>
+<div class="card"><h3>A thank-you letter</h3><p>After Manuel, the guide, kindly took the children on the tour, Alma writes to say thank you. It is still formal but <b>less formal</b> than her first letter. It ends with <i>With thanks</i>.</p></div>
+<div class="card"><h3>Informal vs formal</h3><div class="tbl"><table><tr><th>Informal</th><th>Formal</th></tr><tr><td>Hi Rasha!</td><td>Dear Butterfly Adventures</td></tr><tr><td>contractions (I’m, can’t)</td><td>full words (I am, cannot)</td></tr><tr><td>chatty, exclamations</td><td>polite, precise</td></tr><tr><td>Love Mia</td><td>Yours sincerely</td></tr></table></div></div>`},
+{t:'🔗 Connectives',h:`<div class="card"><h3>Joining ideas</h3><p><b>Connectives</b> join ideas to make longer sentences. A sentence with more than one part is a <mark>multi-clause sentence</mark>.</p><p>• We will visit a waterfall <b>because</b> the children want to swim.<br>• We will go to the rainforest <b>where</b> we will see toucans.</p><p>Each part is a <b>clause</b>. The connective sits in the middle.</p></div>
+<div class="card"><h3>Sentence starters</h3><p>⏰ <b>When:</b> In the morning, Next, After lunch, At the end of the day,<br>📍 <b>Where:</b> Around the corner, By the waterfall, High in the trees,<br>🏃 <b>How:</b> slowly and carefully, quickly, suddenly, quietly, unhappily<br>These make a text easier to understand.</p></div>
+<div class="card"><h3>Try it!</h3><p>"The children love swimming ______ the water is cool." → <b>because</b>. "We stayed at a hotel ______ we could see the mountain." → <b>where</b>.</p></div>`},
+{t:'🔤 Spelling & sounds',h:`<div class="card"><h3>The grapheme o</h3><p>• sounds like short <b>u</b>: love, cover, above<br>• long <b>oo</b>: move<br>• long <b>o</b>: over</p></div>
+<div class="card"><h3>The grapheme ou</h3><p>• short <b>u</b>: young, couple, enough, trouble<br>• <b>oa</b>: mould, shoulder, boulder<br>• short <b>oo</b>: should, would, could<br>• long <b>oo</b>: you, youth, group, through</p></div>
+<div class="card"><h3>Adding -ing and -ed to verbs ending in e</h3><p>Remove the <b>e</b> first!<br>hike + ing = <b>hiking</b> • hike + ed = <b>hiked</b><br>smile + ing = <b>smiling</b> • smile + ed = <b>smiled</b><br>hope → hoped • like → liked • scare → scared</p></div>
+<div class="card"><h3>Irregular past tense</h3><p>see → <b>saw</b> • is → <b>was</b> • run → <b>ran</b> • catch → <b>caught</b>. We must learn these!</p></div>`},
+{t:'🔍 Postcards & clues',h:`<div class="card"><h3>Explicit or implicit?</h3><p><b>Explicit information</b> is stated in the text. <b>Implicit information</b> is something we <b>infer</b> (work out) using clues.</p><p>Example: "It was kind of Manuel to agree to take the children." Explicit: Manuel took the children. Implicit: he did not have to, he chose to.</p></div>
+<div class="card"><h3>Two postcards, one day</h3><p>Mia and her brother Mario write to Mum about the same walking tour, but their postcards are very different. Mia says they had an awesome time and had fun for everyone. Mario says he is fed up with Mia and Elena, who ran riot and scared the wildlife. Same day, two <b>points of view</b>!</p></div>
+<div class="card"><h3>Clues in the postcards</h3><p>• Few animals in the morning because the girls ran around and shouted.<br>• The older couple probably did not enjoy it: they were slow and Mario thinks they were not pleased.<br>• Luiz and Mario looked bored and grumpy: they did not like the walk.</p><p><mark>poorly</mark> ill • <mark>guide</mark> a person who shows you things on a tour • <mark>ran riot</mark> behaved badly • <mark>fed up</mark> had enough of</p></div>`},
+{t:'😠 Letter of complaint',h:`<div class="card"><h3>Mrs Eze’s complaint</h3><p>Mrs Eze writes to Butterfly Adventures because her walking tour was disappointing. She says children under 16 must have an adult, but four unaccompanied children joined. They ran ahead, scared away wildlife and jumped into the waterfall, so she could not enjoy the quiet spot. She asks the company to reply.</p></div>
+<div class="card"><h3>Four sentence types</h3><p>Statement: That was the worst tour I have ever been on.<br>Exclamation: What a disappointment it was!<br>Question: Do you think that is right?<br>Instruction: Give me a full refund.</p></div>
+<div class="card"><h3>Starters that make a letter flow</h3><p><b>However,</b> • <b>At the end of the day,</b> • <b>On your website,</b> • <b>Unfortunately,</b></p><p>Each one links a sentence to the one before it.</p></div>
+<div class="card"><h3>Fact or opinion?</h3><p><b>Fact:</b> can be checked, e.g. "The tour was in Tijuca National Park." <b>Opinion:</b> what someone thinks or feels, e.g. "It was a disappointing day."</p><p>Interesting verbs: <i>dashed</i> and <i>bolted</i> are synonyms for <i>ran</i>.</p><p><mark>unaccompanied</mark> on their own • <mark>legal</mark> allowed by law • <mark>compensation</mark> something given to make up for a mistake • <mark>idyllic</mark> very beautiful and quiet</p></div>`}];
+let ei=0;
+function drawExp(){$('#etabs').innerHTML=EXP.map((e,i)=>`<button class="tab ${i==ei?'on':''}" onclick="ei=${i};drawExp()">${e.t}</button>`).join('');
+$('#ebody').innerHTML=`<button class="btn b" onclick="say('#ebox')">🔊 Read aloud</button><div id="ebox">${EXP[ei].h}</div>`}
+drawExp();
+
+/* ---------- QUESTIONS ---------- */
+const TF=[['A formal letter is written to a close friend.',1,'False. Formal letters are for strangers. Letters to friends are informal.'],
+['A contraction is a short version of words, like cannot → can’t.',0,'True! The apostrophe shows a missed-out letter.'],
+['“Yours sincerely” is a formal ending.',0,'True!'],
+['Explicit information is something we have to work out using clues.',1,'False. That is implicit information. Explicit information is stated in the text.'],
+['When we add -ing to “smile” we remove the e: smiling.',0,'True!']];
+const MC=[['Which is the contraction of “they are”?',['they’re','their','thay’r'],0,'The apostrophe replaces the missing letter a.'],
+['Which of these is a connective?',['because','toucan','quickly'],0,'Connectives join ideas.'],
+['Which greeting fits a formal letter?',['Hi Rasha!','Dear Butterfly Adventures','Hey you'],1,'Formal letters begin with Dear …'],
+['What is the past tense of “run”?',['runned','ran','running'],1,'Run is an irregular verb.'],
+['Which sentence is a fact?',['The guide was brilliant.','The tour took place in Tijuca National Park.','The waterfall was beautiful.'],1,'A fact can be checked.']];
+const FB=[['A ______ tells events that happened, in order.',['recount'],'recount'],['Words with a similar meaning are called ______.',['synonyms','synonym'],'synonyms'],
+['hike + ing = ______',['hiking'],'hiking'],['The past tense of “catch” is ______.',['caught'],'caught'],['We use ______ language to write to strangers.',['formal'],'formal']];
+const SA=[['Give two reasons why people write letters.','To share news, ask for or give information, say thank you, or complain.'],
+['How is a formal letter different from an informal email?','A formal letter has addresses, a date, full words, precise vocabulary and a formal ending like Yours sincerely. An informal email is chatty, uses contractions and exclamations, and ends like Love Mia.'],
+['Why are Mia’s and Mario’s postcards so different?','They wrote about the same day but have different points of view: Mia had fun, Mario was fed up.'],
+['Write a multi-clause sentence using because.','Example: We visited the waterfall because the children wanted to swim.']];
+const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim();
+
+let ri=0;const RT=['✅ True / False','🔘 Multiple Choice','✏️ Fill in the Blank','💭 Short Answer'];
+function drawRev(){$('#rtabs').innerHTML=RT.map((t,i)=>`<button class="tab ${i==ri?'on':''}" onclick="ri=${i};drawRev()">${t}</button>`).join('');
+let h='';
+if(ri==0)h=TF.map((q,i)=>`<div class="card"><b>${i+1}. ${esc(q[0])}</b><div id="tf${i}">${['True','False'].map((o,k)=>`<button class="opt" onclick="pick('tf',${i},${k},${q[1]})">${o}</button>`).join('')}</div><div class="ans" id="tfa${i}">✔ ${esc(q[2])}</div><button class="btn y" onclick="$('#tfa${i}').classList.add('on')">👀 Show answer</button></div>`).join('');
+if(ri==1)h=MC.map((q,i)=>`<div class="card"><b>${i+1}. ${esc(q[0])}</b><div id="mc${i}">${q[1].map((o,k)=>`<button class="opt" onclick="pick('mc',${i},${k},${q[2]})">${String.fromCharCode(65+k)}. ${esc(o)}</button>`).join('')}</div><div class="ans" id="mca${i}">✔ ${String.fromCharCode(65+q[2])}. ${esc(q[1][q[2]])} – ${esc(q[3])}</div><button class="btn y" onclick="$('#mca${i}').classList.add('on')">👀 Show answer</button></div>`).join('');
+if(ri==2)h=FB.map((q,i)=>`<div class="card"><b>${i+1}. ${esc(q[0])}</b><p><input type="text" id="fb${i}" placeholder="Type your answer"></p><button class="btn" onclick="chkFB(${i})">Check</button> <button class="btn y" onclick="$('#fba${i}').classList.add('on')">👀 Show answer</button><div class="ans" id="fba${i}">✔ ${esc(q[2])}</div><p id="fbm${i}"></p></div>`).join('');
+if(ri==3)h=SA.map((q,i)=>`<div class="card"><b>${i+1}. ${esc(q[0])}</b><p><textarea rows="2" placeholder="Write your answer"></textarea></p><button class="btn y" onclick="$('#saa${i}').classList.add('on')">👀 Show answer</button><div class="ans" id="saa${i}">✔ ${esc(q[1])}</div></div>`).join('');
+$('#rbody').innerHTML=h}
+function pick(p,i,k,c){const bs=$('#'+p+i).children;[...bs].forEach(b=>b.classList.remove('right','wrong'));bs[k].classList.add(k==c?'right':'wrong');if(k==c){bs[k].classList.add('right');good();pop('⭐ Great job!')}else{bad();pop('Try again 💪')}$('#'+p+'a'+i).classList.add('on')}
+function chkFB(i){const ok=FB[i][1].includes(norm($('#fb'+i).value));$('#fbm'+i).textContent=ok?'🎉 Correct!':'🤔 Not yet – try again or show the answer.';ok?(good(),pop('⭐ Amazing!')):bad()}
+drawRev();
+
+/* ---------- TEST ---------- */
+const Q=[
+{q:'Who would you write an informal letter to?',o:['A stranger','A close friend','A company manager'],a:1},
+{q:'What is the short form of “it is”?',o:['its','it’s','is’t'],a:1},
+{q:'The apostrophe in a contraction shows that a letter is missed out.',o:['True','False'],a:0},
+{q:'Which ending is formal?',o:['Love Mia','Yours sincerely','See ya!'],a:1},
+{q:'A formal letter has the writer’s address and the date.',o:['True','False'],a:0},
+{q:'Which word is a connective?',o:['because','toucan','quickly'],a:0},
+{q:'“We will go to the rainforest where we will see toucans.” This is a ______ sentence.',o:['one-word','multi-clause','question'],a:1},
+{q:'Explicit information is stated in the text.',o:['True','False'],a:0},
+{q:'What is the past tense of “see”?',o:['seed','saw','seen it'],a:1},
+{q:'Which is a sentence starter that tells us WHEN?',o:['After lunch,','By the waterfall,','Slowly and carefully,'],a:0},
+{q:'smile + ing = ______',f:['smiling']},
+{q:'A letter written to say something is wrong is a letter of ______.',f:['complaint']},
+{q:'A ______ tells what happened in the past, in order.',f:['recount']},
+{q:'Write one difference between a formal and an informal letter. (1–2 sentences)',k:['formal','informal','contraction','friend','stranger','polite','chatty','address','date','greeting','dear','hi','full words','sincerely','love']},
+{q:'Write a sentence about a trip using because or where.',k:['because','where']}];
+const corr=(q,a)=>q.o?a===q.a:q.f?q.f.includes(norm(a)):q.k.some(k=>norm(a).includes(norm(k)));
+const ansText=q=>q.o?q.o[q.a]:q.f?q.f[0]:'(Answers should mention: '+q.k.slice(0,4).join(' / ')+' …)';
+const stuText=(q,a)=>a==null||a===''?'(no answer)':q.o?q.o[a]:a;
+let T=null;
+function renderTest(){if(T&&T.on)return drawQ();
+$('#tbody').innerHTML=`<div class="card"><h3>Before we start 👋</h3><p>Please write your name and email. Both are needed!</p>
+<p><label>Your name<br><input type="text" id="sn" autocomplete="name" placeholder="e.g. Amina Bello"></label></p>
+<p><label>Your email<br><input type="email" id="se" autocomplete="email" placeholder="e.g. amina@email.com"></label></p>
+<p class="msg" id="smsg"></p><button class="btn" onclick="startTest()">🚀 Start the test</button>
+<p>15 questions • 15 points • Take your time!</p></div>`}
+function startTest(){const n=$('#sn').value.trim(),e=$('#se').value.trim();
+if(n.length<2){$('#smsg').textContent='⚠️ Please write your name.';bad();return}
+if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){$('#smsg').textContent='⚠️ Please write a real email, like name@email.com';bad();return}
+T={on:1,n,e,st:new Date().toISOString(),a:Array(Q.length).fill(null),i:0};good();drawQ()}
+function drawQ(){const q=Q[T.i],a=T.a[T.i];
+let inp=q.o?q.o.map((o,k)=>`<button class="opt ${a===k?'sel':''}" onclick="setA(${k})">${String.fromCharCode(65+k)}. ${esc(o)}</button>`).join(''):q.f?`<input type="text" id="ti" value="${esc(a||'')}" oninput="T.a[T.i]=this.value" placeholder="Type here">`:`<textarea id="ti" rows="3" oninput="T.a[T.i]=this.value" placeholder="Write your answer">${esc(a||'')}</textarea>`;
+$('#tbody').innerHTML=`<div class="bar"><div style="width:${T.i/Q.length*100}%"></div></div><p>Question ${T.i+1} of ${Q.length} • ${esc(T.n)}</p>
+<div class="card"><h3>${esc(q.q)}</h3>${inp}</div>
+<button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;drawQ()">⬅ Back</button>
+<button class="btn" onclick="nextQ()">${T.i==Q.length-1?'🏁 Finish':'Next ➡'}</button>`}
+function setA(k){T.a[T.i]=k;beep(500,.08);drawQ()}
+function nextQ(){beep(600,.08);if(T.i<Q.length-1){T.i++;drawQ()}else finish()}
+const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const dec=s=>JSON.parse(decodeURIComponent(escape(atob(s.trim()))));
+let LAST=null;
+function finish(){const miss=T.a.filter(x=>x==null||x==='').length;
+if(miss&&!confirm(miss+' question(s) not answered. Finish anyway?'))return;
+T.en=new Date().toISOString();T.on=0;const rec={n:T.n,e:T.e,st:T.st,en:T.en,a:T.a};LAST=rec;const sc=score(rec),p=Math.round(sc/Q.length*100);
+const code='EL2-'+enc(rec);sc>=Q.length*.6?good():bad();
+$('#tbody').innerHTML=`<div class="card"><div class="big">${p>=80?'🏆':p>=50?'⭐':'💪'} ${sc} / ${Q.length}</div><h3 style="text-align:center">${p>=80?'Superstar, '+esc(T.n)+'!':p>=50?'Well done, '+esc(T.n)+'!':'Good try, '+esc(T.n)+'! Practise in Review.'}</h3>
+<p style="text-align:center">${esc(T.e)} • ${new Date(T.en).toLocaleString()}</p><p id="sent" style="text-align:center;font-weight:700">⏳ Sending to your teacher…</p></div>
+<div class="card"><h3>👨‍👩‍👧 For parents</h3><p>Show this page to your parents. They can also download the results.</p><button class="btn y" onclick="exportX([LAST],'my-english-results.xlsx','#xm2')">📥 Download results (Excel)</button><p class="msg" id="xm2"></p></div>
+<div class="card"><h3>📨 Your result code</h3><p>If your teacher did not get your result automatically, copy this code and send it.</p><textarea class="code" id="rc" readonly onclick="this.select()">${code}</textarea><p><button class="btn b" onclick="copyC()">📋 Copy code</button> <span id="cm"></span></p></div>
+<div class="card"><h3>Your answers</h3>${Q.map((q,i)=>{const ok=corr(q,T.a[i]);return `<p>${ok?'✅':'❌'} <b>${i+1}. ${esc(q.q)}</b><br>You: ${esc(stuText(q,T.a[i]))}${ok?'':'<br>Correct: '+esc(ansText(q))}</p>`}).join('')}</div>
+<button class="btn p" onclick="T=null;renderTest()">🔄 New student</button>`;send(rec)}
+async function send(rec){const el=$('#sent');try{const db=await claude.use('db');if(!db)throw 0;await db.collection('results').doc().set(rec);el.textContent='✅ Your result was sent to your teacher automatically!'}catch(e){el.textContent='📨 Please send the code below to your teacher.'}}
+function copyC(){const t=$('#rc');t.select();try{navigator.clipboard.writeText(t.value);}catch(e){document.execCommand('copy')}$('#cm').textContent='✅ Copied!'}
+
+/* ---------- TEACHER & PARENTS ---------- */
+const PW='1234';let R=[],D=[],unlocked=false,dbSub=false;
+try{R=JSON.parse(localStorage.getItem('el2')||'[]')}catch(e){}
+const save=()=>{try{localStorage.setItem('el2',JSON.stringify(R))}catch(e){}};
+const score=r=>r.a.reduce((s,a,i)=>s+(corr(Q[i],a)?1:0),0);
+const all=()=>{const m={};[...D,...R].forEach(r=>{m[r.e+'|'+r.st]=r});return Object.values(m).sort((a,b)=>new Date(b.en)-new Date(a.en))};
+function unlock(){if($('#pw').value.trim()===PW){unlocked=true;$('#gate').style.display='none';$('#hub').style.display='block';good();subDb();drawTable()}else{$('#pwm').textContent='⚠️ Wrong password. Try again.';bad()}}
+async function subDb(){if(dbSub)return;dbSub=true;const m=$('#dbm');try{const db=await claude.use('db');if(!db){m.textContent='ℹ️ Automatic results are not available in this view. Paste result codes below.';return}
+m.textContent='✅ Live results connected. Results sent by students appear below automatically.';
+db.collection('results').onSnapshot(s=>{D=s.docs.map(d=>d.data()).filter(r=>r&&r.n&&Array.isArray(r.a));drawTable()},e=>{m.textContent='ℹ️ Could not read shared results ('+e.code+'). Paste result codes below.'})}
+catch(e){m.textContent='ℹ️ Automatic results are not available in this view. Paste result codes below.'}}
+function addCodes(){let ok=0,bd=0;$('#codes').value.split(/\s+/).filter(Boolean).forEach(c=>{try{const o=dec(c.replace(/^EL2-/,''));if(!o.n||!Array.isArray(o.a))throw 0;if(!R.some(r=>r.e===o.e&&r.st===o.st)){R.push(o);ok++}}catch(e){bd++}});
+save();drawTable();$('#tmsg').textContent=`✅ Added ${ok} result(s).`+(bd?` ⚠️ ${bd} code(s) could not be read.`:'');if(ok)$('#codes').value=''}
+function drawTable(){if(!unlocked)return;const q=norm($('#srch').value),L=all().filter(r=>!q||norm(r.n).includes(q)||norm(r.e).includes(q));
+$('#cnt').textContent=L.length+' result(s)';
+$('#rcards').innerHTML=L.length?L.map(r=>{const s=score(r),p=Math.round(s/Q.length*100);return `<div class="card"><h3>${p>=80?'🏆':p>=50?'⭐':'💪'} ${esc(r.n)} – ${s} / ${Q.length} (${p}%)</h3><p>${esc(r.e)} • ${new Date(r.en).toLocaleString()}</p><div class="bar"><div style="width:${p}%"></div></div>
+<details><summary><b>See answers &amp; corrections</b></summary>${Q.map((x,i)=>{const ok=corr(x,r.a[i]);return `<p>${ok?'✅':'❌'} <b>${i+1}. ${esc(x.q)}</b><br>Answer: ${esc(stuText(x,r.a[i]))}${ok?'':'<br>Correct: '+esc(ansText(x))}</p>`}).join('')}</details></div>`}).join(''):'<p>No results yet.</p>'}
+function clearAll(){if(confirm('Remove pasted codes from this browser?')){R=[];save();drawTable()}}
+async function exportX(list,fn,ms){const m=$(ms||'#xmsg');if(!list.length){m.textContent='⚠️ No results yet.';return}
+const qs=(r,v)=>Q.map((q,i)=>corr(q,r.a[i])===v?'Q'+(i+1):null).filter(Boolean).join(', ')||'-';
+const d=s=>new Date(s).toLocaleString();
+const res=[['Student name','Student email','Score','Total score','Percentage','Correct questions','Incorrect questions','Test start time','Test end time','Duration (min)']].concat(list.map(r=>[r.n,r.e,score(r),Q.length,Math.round(score(r)/Q.length*100)+'%',qs(r,true),qs(r,false),d(r.st),d(r.en),Math.round((new Date(r.en)-new Date(r.st))/6000)/10]));
+const det=[['Student name','Student email','Question no.','Question','Student answer','Correct answer','Result']];
+list.forEach(r=>Q.forEach((q,i)=>det.push([r.n,r.e,i+1,q.q,stuText(q,r.a[i]),ansText(q),corr(q,r.a[i])?'Correct':'Incorrect'])));
+const wb=XLSX.utils.book_new();[['Results',res],['Answers',det]].forEach(([n,rows])=>{const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=rows[0].map((_,c)=>({wch:Math.min(50,Math.max(...rows.map(r=>String(r[c]).length))+2)}));XLSX.utils.book_append_sheet(wb,ws,n)});
+try{const dl=await claude.use('downloads');if(!dl){m.textContent='⚠️ Saving files is not available in this view. Open the artifact link in claude.ai.';return}
+await dl.save({filename:fn,data:XLSX.write(wb,{type:'array',bookType:'xlsx'})});m.textContent='✅ Excel file ready!'}
+catch(e){m.textContent=e&&e.code==='declined'?'Download cancelled.':'⚠️ Could not save the file ('+(e&&e.code||'error')+').'}}
+</script></body></html>
